@@ -1,16 +1,14 @@
-name: MLOPS-3
+name: farmers
 on: [push]
 jobs:
   run:
-    runs-on: ubuntu-latest
+    runs-on: [ubuntu-latest]
     container: docker://dvcorg/cml-py3:latest
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
-      - uses: iterative/setup-cml@v1
-      - name: Mlops-3 CI-CD
+      - name: cml_run
         env:
-          REPO_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pip install -r requirements.txt
           dvc repro 
@@ -20,4 +18,3 @@ jobs:
           echo "## Validating results by region"
           cml-publish by_region.png --md >> report.md
           cml-send-comment report.md
-        
