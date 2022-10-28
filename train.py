@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import seaborn as sb
 import json
 from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble.RandomForestClassifier
 from sklearn import preprocessing
 from sklearn.model_selection import cross_val_predict
 from sklearn.metrics import confusion_matrix
@@ -18,8 +19,8 @@ X = df.to_numpy()
 X = preprocessing.scale(X)
 si.fit(X)
 X = si.transform(X)
-clf = LogisticRegression()
-y_pred = cross_val_predict(clf, X, y, cv=5)
+clf = RandomForestClassifier()
+y_pred = cross_val_predict(clf, X, y, cv=7)
 acc=np.mean(y_pred==y)
 tn, fp, fn, tp = confusion_matrix(y, y_pred).ravel()
 specificity = tn / (tn+fp)
@@ -35,4 +36,4 @@ df['pred_acc'] = score_int
 ax = sb.barplot(x="region", y="pred_acc", data=df, palette = "Blues")
 ax.set(xlabel="Region", ylabel = "Model accuracy")
 plt.savefig("by_region.png",dpi=80)
-# print(df.groupby('region').pred_acc.value_counts().unstack())
+
