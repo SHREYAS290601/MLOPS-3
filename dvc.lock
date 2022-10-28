@@ -1,0 +1,41 @@
+schema: '2.0'
+stages:
+  Getting_data:
+    cmd: python import_data.py
+    deps:
+    - path: import_data.py
+      md5: 691f83008540f5f593338016cbc5e575
+      size: 515
+    outs:
+    - path: rawdata_new.csv
+      md5: a6aec8da63a5fa2619af025a76746f29
+      size: 68868
+  Process_data:
+    cmd: python get_data.py
+    deps:
+    - path: get_data.py
+      md5: b143c8e13c20c9dff65d9c70ff51fdf1
+      size: 1289
+    - path: rawdata_new.csv
+      md5: a6aec8da63a5fa2619af025a76746f29
+      size: 68868
+    outs:
+    - path: data_processed.csv
+      md5: 03269b6c0a766dc80e090326008765b3
+      size: 24333
+  Train_data:
+    cmd: python train.py
+    deps:
+    - path: data_processed.csv
+      md5: 03269b6c0a766dc80e090326008765b3
+      size: 24333
+    - path: train.py
+      md5: 033ae66b8afd182a12ef7ae6c9e0b627
+      size: 1376
+    outs:
+    - path: by_region.png
+      md5: 66b99c84d2c446808d9e598804691835
+      size: 7770
+    - path: metrics.json
+      md5: 67e4420d94cbecc642b2b46141c366a6
+      size: 71
